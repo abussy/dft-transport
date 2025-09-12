@@ -39,9 +39,9 @@ private:
     superlu_dist_options_t options;
     gridinfo_t grid;
     SuperLUStat_t stat;
-    ScalePermstruct_t ScalePermstruct;
-    LUstruct_t LUstruct;
-    SOLVEstruct_t SOLVEstruct;
+    zScalePermstruct_t ScalePermstruct;
+    zLUstruct_t LUstruct;
+    zSOLVEstruct_t SOLVEstruct;
 
     void create_local_matrix(TCSR<T>*,SuperMatrix*);
 };
@@ -75,9 +75,9 @@ SuperLU<CPX>::~SuperLU()
     
     PStatFree(&stat);
     Destroy_CompRowLoc_Matrix_dist(&A);
-    ScalePermstructFree(&ScalePermstruct);
-    Destroy_LU(n,&grid, &LUstruct);
-    LUstructFree(&LUstruct);
+    zScalePermstructFree(&ScalePermstruct);
+    zDestroy_LU(n,&grid, &LUstruct);
+    zLUstructFree(&LUstruct);
     zSolveFinalize(&options, &SOLVEstruct);
 
     //superlu_gridexit(&grid);
@@ -106,9 +106,9 @@ void SuperLU<CPX>::prepare()
 {
     int info;
 
-    ScalePermstructInit(A.nrow,A.ncol,&ScalePermstruct);
+    zScalePermstructInit(A.nrow,A.ncol,&ScalePermstruct);
 //    LUstructInit(A.nrow,A.ncol,&LUstruct);
-    LUstructInit(A.ncol,&LUstruct);
+    zLUstructInit(A.ncol,&LUstruct);
 
     PStatInit(&stat);
     

@@ -15,6 +15,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #endif
 #include "EnergyVector.H"
 #include <numeric>
+#include <limits>
 
 void write_cp2k_csr(cp2k_csr_interop_type& cp2kCSRmat,const char* filename)
 {
@@ -284,8 +285,8 @@ void c_scf_method(cp2k_transport_parameters cp2k_transport_params, cp2k_csr_inte
         transport_params.inv_solver_method           = static_cast<inv_solver_methods::inv_solver_method_type>(cp2k_transport_params.matrixinv_method);
         transport_params.real_int_method             = static_cast<real_int_methods::real_int_method_type>(cp2k_transport_params.rlaxis_integration_method);
         transport_params.cp2k_method                 = static_cast<cp2k_methods::cp2k_method_type>(cp2k_transport_params.method);
-        if (cp2k_transport_params.eps_fermi<=(numeric_limits<double>::epsilon)()) {
-            transport_params.eps_fermi               = (numeric_limits<double>::epsilon)();
+        if (cp2k_transport_params.eps_fermi<=(std::numeric_limits<double>::epsilon)()) {
+            transport_params.eps_fermi               = (std::numeric_limits<double>::epsilon)();
         } else {
             transport_params.eps_fermi               = cp2k_transport_params.eps_fermi;
         }
